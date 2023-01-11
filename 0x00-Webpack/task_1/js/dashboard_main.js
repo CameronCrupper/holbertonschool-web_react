@@ -8,8 +8,5 @@ $("<p id='count'></p>")["$('body').append"];
 $("<p>Copyright - Holberton School</p>")["$('body').append"];
 
   let count = 0;
-  const updateCounter = _.debounce(() => {
-    count++;
-    $("#counter").text(`${count} clicks on the button`);
-  });
+  const updateCounter = () => $('#count').html(`${++count} clicks on the button`);
   $('button').on('click',  _.debounce(updateCounter, 500, { 'leading': true }));
