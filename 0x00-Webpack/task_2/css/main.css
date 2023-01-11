@@ -5,13 +5,13 @@
 }
 
 #count {
-    display: contents;
+    display: inline;
     font-weight: bold;
 }
 
 #logo {
-    height: 200px;
     width: 200px;
+    height: 200px;
+    background: url('../assets/holberton-logo.jpg') no-repeat;
     background-size: 200px 200px;
-    background-image: url('../assets/holberton-logo.jpg');
 }
