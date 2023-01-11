@@ -12,4 +12,4 @@ $("<p>Copyright - Holberton School</p>")["$('body').append"];
     count++;
     $("#counter").text(`${count} clicks on the button`);
   });
-  $('button').on('click', updateCounter);
+  $('button').on('click',  _.debounce(updateCounter, 500, { 'leading': true }));
