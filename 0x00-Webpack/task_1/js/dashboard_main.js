@@ -9,4 +9,5 @@ $("<p>Copyright - Holberton School</p>")["$('body').append"];
 
 let count = 0;
 const updateCounter = () => $('#count').html(`${++count} clicks on the button`);
-$('button').on('click',  _.debounce(updateCounter, 500, { 'leading': true }));
+
+$('button').on('click', _.debounce(updateCounter, 500, { 'leading': true }));
