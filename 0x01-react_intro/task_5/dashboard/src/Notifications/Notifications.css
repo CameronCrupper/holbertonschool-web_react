@@ -1,0 +1,23 @@
+.Notifications {
+    border: 2px dotted #e70505;
+    padding: 2rem;
+}
+
+.Notifications p {
+    font-size: 1.5rem;
+}
+
+li[data-priority="default"] {
+    color: blue;
+    font-size: 1.2rem;
+}
+
+li[data-priority="urgent"] {
+    color: red;
+    font-size: 1.2rem;
+}
+
+img {
+    height: 20px;
+    cursor: pointer;
+}
