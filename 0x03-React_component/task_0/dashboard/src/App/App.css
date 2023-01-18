@@ -1,0 +1,56 @@
+.App {
+    text-align: center;
+    min-height: 100vh;
+  }
+  
+
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  div {
+    padding: 2px 8px;
+  }
+  .App-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    border-bottom: 3px solid #DF344B
+  }
+  
+  .App-header h1 {
+    margin: auto auto auto 0;
+    color: #DF344B;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  
+  
+  .App-body {
+    padding: 36px 24px;
+    min-height: 65vmin;
+  
+  }
+  .App-body .formName, .App-body p {
+    display: flex;
+    justify-content: left;
+  }
+  
+ 
+
+  .App-footer {
+    width: 100%;
+  }
+  
+  .App-footer p {
+    border-top: 3px solid #DF344B;
+    padding: 16px;
+  }
+  
+  #email, #password, label {
+    margin-right: 5px;
+  }

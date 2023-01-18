@@ -1,14 +1,12 @@
-import React from "react";
-import { getFullYear, getFooterCopy } from "../utils/utils";
-import "./Footer.css";
+import logo from '../assets/holberton_logo.jpg';
+import './Footer.css';
+import { getFooterCopy, getFullYear } from '../utils/utils.js'
 
 function Footer() {
   return (
-    <div className="footer">
-      <p>
-        Copyright {getFullYear()} - {getFooterCopy(true)}
-      </p>
-    </div>
+      <div className="App-footer">
+        <p>Copyright {getFullYear()} - {getFooterCopy()}</p>
+      </div>
   );
 }
 

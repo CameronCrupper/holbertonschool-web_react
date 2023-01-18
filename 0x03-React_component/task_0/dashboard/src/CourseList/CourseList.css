@@ -1,0 +1,19 @@
+#CourseList {
+    border: 1px solid black;
+    width: 100%;
+    /* border-collapse: collapse; */
+    border: 1px solid;
+    border-color: lightgray;
+}
+
+tbody {
+    text-align: left;
+}
+
+tr:nth-last-child(1) {
+    text-align: left;
+}
+
+thead tr th:nth-child(-n + 3) {
+    border-bottom: 2px solid lightgray;
+}
