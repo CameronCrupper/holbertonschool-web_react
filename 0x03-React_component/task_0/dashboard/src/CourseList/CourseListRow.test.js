@@ -1,43 +1,31 @@
-import { shallow } from 'enzyme';
 import React from 'react';
-import "../../config/setupTests"
-import { expect } from 'chai'
-import CourseListRow from './CourseListRow.js'
+import CourseListRow from './CourseListRow';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
-describe("Testing the <CourseListRow /> componet renders", () => {
+describe('CourseListRow Renders', () => {
+  const colSpan2 = shallow(<CourseListRow isHeader={true} textFirstCell='colSpan=2' />);
+  const th2 = shallow(<CourseListRow isHeader={true} textFirstCell='First th' textSecondCell='Second th' />);
+  const td2 = shallow(<CourseListRow textFirstCell='First td' textSecondCell='Second td' />);
 
-    it("Tests to see if header is True and contains col", () => {
-        let props = {
-			isHeader: true,
-			textFirstCell: 'dumbstring',
-		};
-        const wrapper = shallow(<CourseListRow {...props} />);
+  it('without crashing', () => {
+    assert.equal(colSpan2.length, 1);
+    assert.equal(th2.length, 1);
+    assert.equal(td2.length, 1);
+  });
 
-        expect(wrapper.find("th").get(0).props.colSpan).to.equal(2);
-    });
+  it('colSpan=2 th when isHeader=true & textSecondCell=null', () => {
+    assert.equal(colSpan2.children().length, 1)
+    assert.equal(th2.children().first().type(), 'th');
+  });
 
-    it("Tests that renders two cells then textSecondCell is present", () => {
-        let props = {
-			isHeader: true,
-			textFirstCell: 'dumbstring',
-            textSecondCell: 'dumbstring'
-		};
-        const wrapper = shallow(<CourseListRow {...props} />);
+  it('th x2 when isHeader=true & textSecondCell != null', () => {
+    assert.equal(th2.children().length, 2);
+    assert.equal(th2.children().first().type(), 'th');
+  });
 
-        expect(wrapper.find("tr").children()).to.have.lengthOf(2);
-    })
-
-    it("Tests that two td element render inside of tr", () => {
-        const wrapper = shallow(
-            <CourseListRow
-              isHeader={false}
-              textFirstCell="one"
-              textSecondCell="two"
-            />
-          );
-          const item = wrapper.find("tr");
-      
-          expect(item).to.have.lengthOf(1);
-          expect(item.children("td")).to.have.lengthOf(2);
-        });
+  it('td x2 when isHeader=true & textSecondCell != null', () => {
+    assert.equal(td2.children().length, 2);
+    assert.equal(td2.children().first().type(), 'td');
+  });
 })

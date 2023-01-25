@@ -1,21 +1,8 @@
-/*Application body section*/
-
-.App-body {
-  padding: 36px 24px;
-  /* display: flex;
-  justify-content: left; */
-  min-height: 60vmin;
-  /* height: 500px; */
-}
-.App-body .formName, .App-body p {
-  display: flex;
-  justify-content: left;
+.Login label {
+    margin-right: 25px;
 }
 
-/* .App-body {
-  display: flex;
-} */
-
-#email, #password, label {
-  margin-right: 5px;
+.Login #email,
+.Login #password {
+    margin-left: 10px;
 }

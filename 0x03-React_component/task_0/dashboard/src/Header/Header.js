@@ -1,15 +1,13 @@
-import logo from '../assets/holberton_logo.jpg';
+import React from 'react';
 import './Header.css';
-import { getFooterCopy, getFullYear } from '../utils/utils.js'
+import Holb_Logo from '../assets/Holb_Logo.jpg';
 
-function Header() {
+
+export default function Header() {
   return (
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>School dashboard</h1>
-      </div>
-  );
+    <React.Fragment>
+      <img src={Holb_Logo} className="App-logo" alt="logo" />
+      <h1>School dashboard</h1>
+    </React.Fragment>
+  )
 }
-
-
-export default Header;

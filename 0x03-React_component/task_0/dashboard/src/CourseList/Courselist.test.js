@@ -1,29 +1,44 @@
-import { shallow } from 'enzyme';
 import React from 'react';
-import "../../config/setupTests";
-import { expect } from 'chai';
-import CourseList from './CourseList.js';
-// import CourseListRow from './CourseListRow.js';
+import CourseList from './CourseList';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
-describe("Testing the <CourseListRow /> componet renders", () => {
-    let listCourses;
-    beforeEach(() => {
-        listCourses = [
-          { id: 1, name: "ES6", credit: 60 },
-          { id: 2, name: "Webpack", credit: 20 },
-          { id: 3, name: "React", credit: 40 },
-        ];
-      });
+const listCourses = [
+  { id: '1', name: 'Test 1', credit: 10 },
+  { id: '2', name: 'Test 2', credit: 20 },
+  { id: '3', name: 'Test 3', credit: 30 },
+];
 
-    it("Tests to see if <CourseList /> Renders", () => {
-        const wrapper = shallow(<CourseList listCourses={listCourses}/>);
-        expect(wrapper.render()).to.not.be.an("undefined");
-    });
+describe('CourseList Renders', () => {
+  const courseList = shallow(<CourseList />);
+  const rows = courseList.find('CourseListRow');
 
+  const listCoursesCL = shallow(<CourseList listCourses={listCourses} />);
+  const listCoursesR = listCoursesCL.find('CourseListRow');
 
-    it("Tests to see if It renders 5 rows", () => {
-        const wrapper = shallow(<CourseList listCourses={listCourses}/>);
+  it('without crashing', () => {
+    assert.equal(courseList.length, 1);
+    assert.equal(listCoursesCL.length, 1);
+  });
 
-        expect(wrapper.find("CourseListRow")).to.have.lengthOf(5);
-    });
-})
+  it('with listCourses: 5 rows with array of 3', () => {
+    assert.equal(listCoursesR.length, 5);
+  });
+
+  it('with listCourses: correct text in rows', () => {
+    assert.equal(listCoursesR.at(2).render().find('td').first().text(), 'Test 1');
+    assert.equal(listCoursesR.at(2).render().find('td').last().text(), 10);
+    assert.equal(listCoursesR.at(3).render().find('td').first().text(), 'Test 2');
+    assert.equal(listCoursesR.at(3).render().find('td').last().text(), 20);
+    assert.equal(listCoursesR.at(4).render().find('td').first().text(), 'Test 3');
+    assert.equal(listCoursesR.at(4).render().find('td').last().text(), 30);
+  });
+
+  it('Not listCourses: 3 rows', () => {
+    assert.equal(rows.length, 3);
+  });
+
+  it('Not listCourses: correct text in the last row', () => {
+    assert.equal(rows.last().render().find('th').text(), 'No course available yet');
+  });
+});

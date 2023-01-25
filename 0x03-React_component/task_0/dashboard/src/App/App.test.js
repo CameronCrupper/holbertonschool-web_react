@@ -1,86 +1,64 @@
-import { shallow, mount } from 'enzyme';
-import App from './App';
 import React from 'react';
-import "../../config/setupTests";
-import Notifications from '../Notifications/Notifications.js';
-import Header from '../Header/Header.js';
-import Login from '../Login/Login.js';
-import Footer from '../Footer/Footer.js';
-// import { expect } from 'chai';
-import CourseList from '../CourseList/CourseList';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
-describe("<App>", () => {
-	let wrapper;
+describe('App Renders', () => {
+  const app = shallow(<App />);
+  const header = app.find('.App-header');
+  const body = app.find('.App-body');
+  const footer = app.find('.App-footer');
+  const notificationsRender = app.find('Notifications').render();
+  const headerRender = app.find('Header').render();
+  const loginRender = app.find('Login').render();
+  const courseListRender = app.find('CourseList');
+  const footerRender = app.find('Footer').render();
 
-	beforeEach(() => {
-		wrapper = shallow(<App />);
-	});
+  it('without crashing', () => {
+    assert.equal(app.length, 1);
+  });
 
-	it("<App /> is rendered without crashing", () => {
-		expect(wrapper.exists()).toBe(true);
-	});
+  it('the header', () => {
+    assert.equal(header.length, 1);
+  });
 
-    it("<App /> is rendering <Header /> componet", () => {
-        expect(wrapper.contains(<Header />)).toEqual(true);
-    });
+  it('the body', () => {
+    assert.equal(body.length, 1);
+  });
 
-    it("<App /> is rendering <Notification /> componet", () => {
-        expect(wrapper.contains(<Notifications displayDrawer={true}/>)).toEqual(false);
-    });
+  it('the footer', () => {
+    assert.equal(footer.length, 1);
+  });
 
-    it("<App /> is rendering <Login /> componet", () => {
-        expect(wrapper.contains(<Login />)).toEqual(true);
-    });
+  it('children that render correctly', () => {
+    assert.isOk(notificationsRender.hasClass('menuItem'));
+    assert.equal(notificationsRender.length, 1);
+    assert.equal(headerRender.length, 2);
+    assert.equal(loginRender.length, 2);
+    assert.equal(footerRender.length, 1);
+  });
 
-    it("<App /> is rendering <Footer /> componet", () => {
-        expect(wrapper.contains(<Footer />)).toEqual(true);
-    });
+  it('NOT the CourseList', () => {
+    assert.equal(courseListRender.length, 0);
+  });
+});
 
-    it("<App /> is not rending <CourseList /> componet", () => {
-        expect(wrapper.exists(CourseList)).toEqual(false);
-    });
+describe('Logged in App Renders', () => {
+  const app = shallow(<App isLoggedIn={true} />);
+  const body = app.find('.App-body');
+  const login = body.find('Login');
+  const courseListRender = body.find('CourseList').render()[0];
 
-})
+  it('without crashing', () => {
+    assert.equal(app.length, 1);
+  });
 
-describe("<App />", () => {
-    let wrapper;
+  it('the CourseList', () => {
+    assert.equal(courseListRender.name, 'table');
+  });
 
-	beforeEach(() => {
-		wrapper = shallow(<App isLoggedIn={true}/>);
-	});
-
-    it("Tests App when is logged in to see logged in componet", () => {
-        expect(wrapper.exists(Login)).toEqual(false);
-    });
-
-    it("Tests App when logged in to see that CourseList exists", () => {
-        expect(wrapper.exists(CourseList)).toEqual(true);
-    })
-})
-
-describe("<App /> ", () => {
-    it("Mocks Alert('Logging you out') when pressing Ctrl + h", () => {
-        let events = {};
-        const myLogOut = jest.fn(() => undefined);
-
-        document.addEventListener = jest.fn((event, cb) => {
-            events[event] = cb;
-        });
-        window.alert = jest.fn();
-        shallow(<App logOut={myLogOut} />);
-
-        events.keydown({ key: "h", ctrlKey: true })
-        expect(myLogOut).toHaveBeenCalled();
-        expect(window.alert).toHaveBeenCalledWith("Logging you out");
-        // const myLogOut = jest.fn(() => undefined);
-
-        // const appComp = mount(<App logOut={myLogOut} />);
-        // const log = jest.spyOn(console, 'log');
-        
-        // expect(appComp.props.logOut);
-        // expect(log);
-    
-        jest.restoreAllMocks();    
-        
-    })
-})
+  it('NOT the Login', () => {
+    assert.equal(login.length, 0);
+  });
+});

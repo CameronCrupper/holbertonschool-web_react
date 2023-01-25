@@ -1,21 +1,21 @@
-import Footer from './Footer.js'
-import { shallow } from 'enzyme';
 import React from 'react';
-import "../../config/setupTests"
-import { expect } from 'chai';
+import ReactDOM from 'react-dom';
+import Footer from './Footer';
+import { shallow } from 'enzyme';
+import chai from 'chai';
+
+chai.use(require('chai-string'));
 
 
-describe("Testing the <Footer /> componet", () => {
-    let wrapper;
+describe('Footer', () => {
+  const footer = shallow(<Footer />);
 
-    beforeEach(() => {
-        wrapper = shallow(<Footer />)
-    })
-    it("Footer componet loads", () => {
-        expect(wrapper.render()).to.not.be.an("undefined")
-    });
+  it('renders without crashing', () => {
+    chai.assert.equal(footer.length, 1);
+  });
 
-    it("Footer componet has text", () => {
-        expect(wrapper.text().includes('Copyright')).to.equal(true);
-    });
+  it('the text starts with "Copyright"', () => {
+    chai.assert.startsWith(footer.find('p').text(), 'Copyright');
+  });
+
 });

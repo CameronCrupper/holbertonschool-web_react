@@ -1,29 +1,13 @@
 .Notifications {
-    border: 2px dashed #DF344B;
-    height: 120px;
-    width: 30%;
-    position: absolute;
-    left: 66%;
-    top: 16%;
+	border: 1px red dashed;
+	padding: 1rem;
+	margin: 1rem;
 }
 
-#button-img {
-    height: 10px;
-    width: 10px;
+[data-priority="default"] {
+	color: blue;
 }
 
-.default {
-    color: blue;
-}
-
-.urgent {
-    color: red;
-}
-
-.menuItem {
-    height: 6%;
-    width: 12%;
-    position: absolute;
-    left: 85%;
-    top: 10%;
+[data-priority="urgent"] {
+	color: red;
 }

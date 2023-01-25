@@ -1,25 +1,19 @@
-import Login from './Login.js'
-import { shallow } from 'enzyme';
 import React from 'react';
-import "../../config/setupTests"
-import { expect } from 'chai';
+import ReactDOM from 'react-dom';
+import Login from './Login';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
+describe('Login', () => {
+  const login = shallow(<Login />);
 
-describe("Testing the <Login /> componet", () => {
-    let wrapper;
+  it('renders without crashing', () => {
+    assert.equal(login.length, 1);
+  });
 
-    beforeEach(() => {
-        wrapper = shallow(<Login />)
-    })
-    it("Login componet loads", () => {
-        expect(wrapper.render()).to.not.be.an("undefined")
-    });
+  it('reders 2 label tags & 3 input tags', () => {
+    assert.equal(login.find('label').length, 2);
+    assert.equal(login.find('input').length, 3);
+  });
 
-    it("Login componet has img", () => {
-        expect(wrapper.find("input")).to.have.lengthOf(2);
-    });
-
-    it("Login componet has h1", () => {
-        expect(wrapper.find("label")).to.have.lengthOf(2);
-    });
 });

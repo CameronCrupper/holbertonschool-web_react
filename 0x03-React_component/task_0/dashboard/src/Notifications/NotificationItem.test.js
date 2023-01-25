@@ -1,19 +1,24 @@
-import { shallow } from 'enzyme';
-import NotificationItem from "./NotificationItem.js";
 import React from 'react';
-import "../../config/setupTests"
-import { expect } from 'chai'
+import NotificationItem from './NotificationItem';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
-describe("Testing the <NotificationItem /> componet renders", () => {
+describe('NotificationItem Renders', () => {
+  const NI = shallow(<NotificationItem />);
+  const typeValue = shallow(<NotificationItem value='test' />);
+  const typeHtml = shallow(<NotificationItem type='urgent' html={{ __html: '<u>test</u>' }} />);
 
-    it("Tests to see <Li componet was rendered", () => {
-        const wrapper = shallow(<NotificationItem />);
-        expect(wrapper.render()).to.not.be.an("undefined")
-    });
+  it('without crashing', () => {
+    assert.equal(NI.length, 1);
+    assert.equal(typeValue.length, 1);
+    assert.equal(typeHtml.length, 1);
+  });
 
-    it("Tests to see if props are passed along and rendered", () => {
-        const wrapper = shallow(<NotificationItem type="default" value="test" />);
-        expect(wrapper.props()['data-notification-type']).to.equal('default');
-        expect(wrapper.props()['children']).to.equal('test');
-    });
-})
+  it('with correct data properties & html', () => {
+    assert.equal(typeValue.props()['data-priority'], 'default');
+    assert.equal(typeValue.text(), 'test');
+    assert.equal(typeHtml.props()['data-priority'], 'urgent');
+    assert.equal(typeHtml.text(), '');
+    assert.equal(typeHtml.props().dangerouslySetInnerHTML.__html, '<u>test</u>');
+  });
+});
