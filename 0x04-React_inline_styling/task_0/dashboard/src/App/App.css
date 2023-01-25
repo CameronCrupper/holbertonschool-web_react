@@ -1,10 +1,9 @@
-:root {
-    --primary-color: #e11d3f;
-    font: 18px Helvetica, Arial, sans-serif;
-  }
-  
-  .App {
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-  }
+.App-body {
+    padding: 2% 3% ;
+    height: 480px;
+}
+
+.App-footer {
+    text-align: center;
+    border-top: solid red;
+}

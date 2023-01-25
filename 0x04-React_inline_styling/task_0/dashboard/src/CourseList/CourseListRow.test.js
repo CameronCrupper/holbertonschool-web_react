@@ -1,24 +1,31 @@
-import { shallow } from 'enzyme';
 import React from 'react';
 import CourseListRow from './CourseListRow';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
+describe('CourseListRow Renders', () => {
+  const colSpan2 = shallow(<CourseListRow isHeader={true} textFirstCell='colSpan=2' />);
+  const th2 = shallow(<CourseListRow isHeader={true} textFirstCell='First th' textSecondCell='Second th' />);
+  const td2 = shallow(<CourseListRow textFirstCell='First td' textSecondCell='Second td' />);
 
-// shallow render CourseListRow component
-describe('<CourseListRow />', () => {
-	it(`When isHeader is true, renders on cell with colspan=2
-	when textSecondCell does not exist`, () => {
-		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="test" />);
-		expect(wrapper.find('th').exists()).toBe(true);
-	})
+  it('without crashing', () => {
+    assert.equal(colSpan2.length, 1);
+    assert.equal(th2.length, 1);
+    assert.equal(td2.length, 1);
+  });
 
-	it(`When isHeader is true, renders two cells when textSecondCell is present`, () => {
-		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="test" textSecondCell="test2" />);
-		expect(wrapper.find('th').length).toBe(2);
-	})
+  it('colSpan=2 th when isHeader=true & textSecondCell=null', () => {
+    assert.equal(colSpan2.children().length, 1)
+    assert.equal(th2.children().first().type(), 'th');
+  });
 
-	it(`When isHeader is false, renders two td elements within a tr element`, () => {
-		const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="test" textSecondCell="test2" />);
-		expect(wrapper.find('tr').length).toBe(1);
-		expect(wrapper.find('td').length).toBe(2);
-	})
+  it('th x2 when isHeader=true & textSecondCell != null', () => {
+    assert.equal(th2.children().length, 2);
+    assert.equal(th2.children().first().type(), 'th');
+  });
+
+  it('td x2 when isHeader=true & textSecondCell != null', () => {
+    assert.equal(td2.children().length, 2);
+    assert.equal(td2.children().first().type(), 'td');
+  });
 })

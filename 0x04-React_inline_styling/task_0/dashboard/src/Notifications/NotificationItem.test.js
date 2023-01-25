@@ -1,35 +1,36 @@
-import React, { PureComponent } from 'react'
-import propTypes from 'prop-types'
+import React from 'react';
+import NotificationItem from './NotificationItem';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
+global.console.log = jest.fn()
 
-class NotificationItem extends PureComponent {
-	render() {
-		// props:
-		// - type: string, required, default: 'default'
-		// - value: string
-		// - html: object with key '__html' and value: string
-		if ((this.props.type && this.props.value) && (typeof this.props.type === 'string' && typeof this.props.value === 'string') && (!this.props.html)) return(<li data-notification-type={this.props.type} onClick={this.props.markAsRead}>{this.props.value}</li>)
-		if ((!this.props.type) && (this.props.html) && (this.props.html.__html)) return(<li data-notification-type="default" dangerouslySetInnerHTML={this.props.html} onClick={this.props.markAsRead}></li>)
-		if ((this.props.type) && (this.props.html) && (this.props.html.__html)) return(<li data-notification-type={this.props.type} dangerouslySetInnerHTML={this.props.html} onClick={this.props.markAsRead}></li>)
-		return(<li data-notification-type="default" onClick={this.props.markAsRead}>NotificationItem: invalid props</li>)
-	}
-}
+describe('NotificationItem Renders', () => {
+  const out = jest.spyOn(console, "log");
+  const NI = shallow(<NotificationItem />);
+  const typeValue = shallow(<NotificationItem value='test' markAsRead={() => console.log('Test 2')} />);
+  const typeHtml = shallow(<NotificationItem type='urgent' html={{ __html: '<u>test</u>' }} markAsRead={() => console.log('Test 3')} />);
 
+  it('without crashing', () => {
+    assert.equal(NI.length, 1);
+    assert.equal(typeValue.length, 1);
+    assert.equal(typeHtml.length, 1);
+  });
 
-NotificationItem.propTypes = {
-	type: propTypes.string,
-	value: propTypes.string,
-	html: propTypes.shape({
-		__html: propTypes.string,
-	}),
-	markAsRead: propTypes.func,
-	id: propTypes.number,
-}
+  it('with correct data properties & html', () => {
+    assert.equal(typeValue.props()['data-priority'], 'default');
+    assert.equal(typeValue.text(), 'test');
+    assert.equal(typeHtml.props()['data-priority'], 'urgent');
+    assert.equal(typeHtml.text(), '');
+    assert.equal(typeHtml.props().dangerouslySetInnerHTML.__html, '<u>test</u>');
+  });
 
-NotificationItem.defaultProps = {
-	type: 'default',
-	markAsRead: () => {},
-	id: 0,
-}
-
-export default NotificationItem
+  it('with onClick function that logs correct text', () => {
+    NI.props().onClick();
+    expect(out).toHaveBeenCalledWith('markAsRead missing');
+    typeValue.props().onClick();
+    expect(out).toHaveBeenCalledWith('Test 2');
+    typeHtml.props().onClick();
+    expect(out).toHaveBeenCalledWith('Test 3');
+  });
+});

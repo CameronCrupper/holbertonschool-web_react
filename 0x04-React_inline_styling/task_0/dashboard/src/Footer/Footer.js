@@ -1,11 +1,12 @@
-import React from 'react'
-import { getFullYear, getFooterCopy } from '../utils/utils'
-import './Footer.css'
+import React from 'react';
+import './Footer.css';
+import { getFullYear, getFooterCopy } from '../utils/utils';
 
-export default function Footer(props) {
-	return (
-		<footer className="App-footer">
-			<p>Copyright {getFullYear()} - {getFooterCopy(true)}</p>
-		</footer>
-	)
+
+export default function Footer() {
+  return (
+    <React.Fragment>
+      <p>Copyright {getFullYear()} - {getFooterCopy(0)}</p>
+    </React.Fragment>
+  )
 }

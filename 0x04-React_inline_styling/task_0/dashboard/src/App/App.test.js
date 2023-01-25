@@ -1,75 +1,75 @@
-import { shallow, mount } from '../../config/setupTests';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import App from './App';
-import Login from '../Login/Login';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
-window.alert = jest.fn();
+describe('App Renders', () => {
+  const logout = jest.fn(() => console.log('logout running'));
+  const alert = jest.spyOn(global, 'alert');
 
+  const app = shallow(<App logOut={logout} />);
+  const header = app.find('.App-header');
+  const body = app.find('.App-body');
+  const footer = app.find('.App-footer');
+  const notificationsRender = app.find('Notifications').render();
+  const headerRender = app.find('Header').render();
+  const loginRender = app.find('Login').render();
+  const courseListRender = app.find('CourseList');
+  const footerRender = app.find('Footer').render();
 
-// shallow render app component
-describe('<App />', () => {
-	afterEach(() => {
-		jest.clearAllMocks();
-	});
+  it('without crashing', () => {
+    assert.equal(app.length, 1);
+  });
 
-	// regular render tests
-	it('Tests that App renders without crashing', () => {
-		const wrapper = shallow(<App />);
-		expect(wrapper.exists()).toBe(true);
-	})
+  it('the header', () => {
+    assert.equal(header.length, 1);
+  });
 
-	it('Contains Header component', () => {
-		const wrapper = shallow(<App />);
-		expect(wrapper.find('Header').length).toBe(1);
-	})
+  it('the body', () => {
+    assert.equal(body.length, 1);
+  });
 
-	it('Contains Login component', () => {
-		const wrapper = shallow(<App />);
-		expect(wrapper.contains(<Login />)).toBe(true);
-	})
+  it('the footer', () => {
+    assert.equal(footer.length, 1);
+  });
 
-	it('Contains Footer component', () => {
-		const wrapper = shallow(<App />);
-		expect(wrapper.find('Footer').length).toBe(1);
-	})
+  it('children that render correctly', () => {
+    assert.isOk(notificationsRender.hasClass('menuItem'));
+    assert.equal(notificationsRender.length, 2);
+    assert.equal(headerRender.length, 2);
+    assert.equal(loginRender.length, 2);
+    assert.equal(footerRender.length, 1);
+  });
 
-	it('Tests that CourseList is not displayed', () => {
-		const wrapper = shallow(<App />);
-		expect(wrapper.find('CourseList').length).toBe(0);
-	})
+  it('an alert and calls the function logout when ctrl-h is pressed', () => {
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
+    document.dispatchEvent(new KeyboardEvent("keydown", { ctrlKey: true, key: 'h' }));
+    expect(alert).toHaveBeenCalled();
+    expect(alert).toHaveBeenCalledWith('Logging you out');
+    expect(logout).toHaveBeenCalled();
+  });
+
+  it('NOT the CourseList', () => {
+    assert.equal(courseListRender.length, 0);
+  });
 });
 
+describe('Logged in App Renders', () => {
+  const app = shallow(<App isLoggedIn={true} />);
+  const body = app.find('.App-body');
+  const login = body.find('Login');
+  const courseListRender = body.find('CourseList').render()[0];
 
-// describe case when isLoggedIn is true
-describe('<App />', () => {
-	it('Tests that the Login component is not rendered when isLoggedIn is true', () => {
-		const wrapper = shallow(<App isLoggedIn={true} />);
-		expect(wrapper.contains(<Login />)).toBe(false);
-	})
+  it('without crashing', () => {
+    assert.equal(app.length, 1);
+  });
 
-	it('Tests that CourseList component is rendered when isLoggedIn is false', () => {
-		const wrapper = shallow(<App isLoggedIn />);
-		expect(wrapper.find('CourseList').length).toBe(1);
-	})
+  it('the CourseList', () => {
+    assert.equal(courseListRender.name, 'table');
+  });
 
-	// next 2 tests are under review, spyOn() is not working
-	// and I keep getting this error:
-	// TypeError: wrapper.instance(...).keyDownHandler is not a function
-	//
-	// fixed by testing with mount()
-
-	it(`Verifies that alert is called when ctrl-h is pressed`, () => {
-		const wrapper = mount(<App isLoggedIn />);
-		wrapper.instance().keyDownHandler = window.alert;
-		wrapper.instance().keyDownHandler({ keyCode: 72, ctrlKey: true });
-		expect(window.alert).toHaveBeenCalled();
-	})
-
-	it(`Verifies that logOut function is called when ctrl-h is pressed`, () => {
-		const ConsoleSpy = jest.spyOn(global.console, 'log');
-		const wrapper = mount(<App isLoggedIn />);
-		wrapper.instance().keyDownHandler({ keyCode: 72, ctrlKey: true });
-		expect(ConsoleSpy).toHaveBeenCalledWith('logOut function console log for testing');
-		wrapper.unmount();
-	})
-
-})
+  it('NOT the Login', () => {
+    assert.equal(login.length, 0);
+  });
+});

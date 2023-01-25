@@ -1,18 +1,19 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Header from './Header';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
+describe('Header', () => {
+  const header = shallow(<Header />);
 
-// shallow render header component
-describe('<Header />', () => {
-	it('Tests that Header renders without crashing', () => {
-		const wrapper = shallow(<Header />);
-		expect(wrapper.exists()).toBe(true);
-	})
+  it('renders without crashing', () => {
+    assert.equal(header.length, 1);
+  });
 
-	it('Tests that the component renders <img> and <h1> tags', () => {
-		const wrapper = shallow(<Header />);
-		expect(wrapper.exists('img')).toBe(true);
-		expect(wrapper.exists('h1')).toBe(true);
-	})
+  it('reders an img and h1 tag', () => {
+    assert.equal(header.find('img').length, 1);
+    assert.equal(header.find('h1').length, 1);
+  });
+
 });

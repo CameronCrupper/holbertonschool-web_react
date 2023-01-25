@@ -1,18 +1,19 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Login from './Login';
+import { shallow } from 'enzyme';
+import { assert } from 'chai';
 
+describe('Login', () => {
+  const login = shallow(<Login />);
 
-// shallow render login component
-describe('<Login />', () => {
-	it('Tests that Login renders without crashing', () => {
-		const wrapper = shallow(<Login />);
-		expect(wrapper.exists()).toBe(true);
-	})
+  it('renders without crashing', () => {
+    assert.equal(login.length, 1);
+  });
 
-	it('Tests that the component renders 2 <input> and 2 <label> tags', () => {
-		const wrapper = shallow(<Login />);
-		expect(wrapper.find('input').length).toBe(2);
-		expect(wrapper.find('label').length).toBe(2);
-	})
+  it('reders 2 label tags & 3 input tags', () => {
+    assert.equal(login.find('label').length, 2);
+    assert.equal(login.find('input').length, 3);
+  });
+
 });

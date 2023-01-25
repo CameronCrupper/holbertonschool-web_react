@@ -1,17 +1,8 @@
-root {
-    --primary-color: #e11d3f;
-    font: 18px Helvetica, Arial, sans-serif;
-  }
-  
-  .App {
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .App-body {
-    display: flex;
-    flex-direction: column;
-    margin: 3rem;
-    min-height: 50vh;
-  }
+.Login label {
+    margin-right: 25px;
+}
+
+.Login #email,
+.Login #password {
+    margin-left: 10px;
+}

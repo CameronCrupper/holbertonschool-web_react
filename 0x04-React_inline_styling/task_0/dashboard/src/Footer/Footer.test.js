@@ -1,17 +1,21 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Footer from './Footer';
+import { shallow } from 'enzyme';
+import chai from 'chai';
+
+chai.use(require('chai-string'));
 
 
-// shallow render footer component
-describe('<Footer />', () => {
-	it('Tests that Footer renders without crashing', () => {
-		const wrapper = shallow(<Footer />);
-		expect(wrapper.exists()).toBe(true);
-	})
+describe('Footer', () => {
+  const footer = shallow(<Footer />);
 
-	it('Contains the text "Copyright"', () => {
-		const wrapper = shallow(<Footer />);
-		expect(wrapper.text()).toContain('Copyright');
-	})
+  it('renders without crashing', () => {
+    chai.assert.equal(footer.length, 1);
+  });
+
+  it('the text starts with "Copyright"', () => {
+    chai.assert.startsWith(footer.find('p').text(), 'Copyright');
+  });
+
 });

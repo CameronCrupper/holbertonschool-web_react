@@ -1,35 +1,26 @@
-import React, { PureComponent } from 'react'
-import propTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-
-class NotificationItem extends PureComponent {
-	render() {
-		// props:
-		// - type: string, required, default: 'default'
-		// - value: string
-		// - html: object with key '__html' and value: string
-		if ((this.props.type && this.props.value) && (typeof this.props.type === 'string' && typeof this.props.value === 'string') && (!this.props.html)) return(<li data-notification-type={this.props.type} onClick={this.props.markAsRead}>{this.props.value}</li>)
-		if ((!this.props.type) && (this.props.html) && (this.props.html.__html)) return(<li data-notification-type="default" dangerouslySetInnerHTML={this.props.html} onClick={this.props.markAsRead}></li>)
-		if ((this.props.type) && (this.props.html) && (this.props.html.__html)) return(<li data-notification-type={this.props.type} dangerouslySetInnerHTML={this.props.html} onClick={this.props.markAsRead}></li>)
-		return(<li data-notification-type="default" onClick={this.props.markAsRead}>NotificationItem: invalid props</li>)
-	}
+function NotificationItem({ markAsRead, type, value, html, id }) {
+  if (value) {
+    return ( <li data-priority={type} onClick={() => markAsRead(id)}>{value}</li> );
+  }
+  return ( <li data-priority={type} dangerouslySetInnerHTML={html} onClick={() => markAsRead(id)}/> );
 }
 
-
 NotificationItem.propTypes = {
-	type: propTypes.string,
-	value: propTypes.string,
-	html: propTypes.shape({
-		__html: propTypes.string,
-	}),
-	markAsRead: propTypes.func,
-	id: propTypes.number,
+  id: PropTypes.number.isRequired,
+  html: PropTypes.shape({ __html: PropTypes.string }),
+  type: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  markAsRead: PropTypes.func,
 }
 
 NotificationItem.defaultProps = {
-	type: 'default',
-	markAsRead: () => {},
-	id: 0,
+  html: { __html: '' },
+  type: 'default',
+  value: '',
+  markAsRead: (id) => console.log(`Notification ${id} has been marked as read`),
 }
 
-export default NotificationItem
+export default React.memo(NotificationItem)

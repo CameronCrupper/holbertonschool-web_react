@@ -1,18 +1,11 @@
-:root {
-	--primary-color: #E11D3F;
-	font: 18px Helvetica, Arial, sans-serif;
-}
-
 .App-header {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	color: var(--primary-color);
-	border-bottom: 3px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    border-bottom: medium solid red;
+    border-bottom-color: red;
 }
-
 
 .App-logo {
-	height: 200px;
-	width: 200px;
+    width: 240px;
+    height: 240px;
 }
