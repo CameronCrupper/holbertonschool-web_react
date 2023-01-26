@@ -46,6 +46,8 @@ export default class App extends React.Component {
         padding: '2% 3%',
         height: '480px',
       },
+      footer: {
+      }
     });
 
     return (
