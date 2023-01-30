@@ -1,15 +1,15 @@
-import { SELECT_COURSE, UNSELECT_COURSE } from './courseActionTypes';
+import courseTypes from './courseActionTypes';
 
 export function selectCourse(index) {
   return {
-    type: SELECT_COURSE,
+    type: courseTypes.SELECT_COURSE,
     index,
   };
 }
 
 export function unSelectCourse(index) {
   return {
-    type: UNSELECT_COURSE,
+    type: courseTypes.UNSELECT_COURSE,
     index,
   };
 }
